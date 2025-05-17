@@ -70,7 +70,10 @@ const AIInsights = () => {
     };
   };
 
-  const predictions = getAIPredictions(selectedCrypto.id);
+  // Ensure we always have a valid ID
+  const cryptoId = selectedCrypto?.id || "bitcoin";
+  
+  const predictions = getAIPredictions(cryptoId);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -88,14 +91,14 @@ const AIInsights = () => {
                 shortTermPrediction={predictions.shortTerm}
                 longTermPrediction={predictions.longTerm}
               />
-              <SentimentEngine cryptoId={selectedCrypto.id || "bitcoin"} />
-              <NewsIntelligence cryptoId={selectedCrypto.id || "bitcoin"} />
+              <SentimentEngine cryptoId={cryptoId} />
+              <NewsIntelligence cryptoId={cryptoId} />
             </div>
             
             <div className="col-span-1 space-y-4">
               <CryptoWatchlist
                 onSelectCrypto={setSelectedCrypto}
-                selectedCryptoId={selectedCrypto.id}
+                selectedCryptoId={cryptoId}
               />
             </div>
           </div>

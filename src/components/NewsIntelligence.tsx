@@ -18,7 +18,7 @@ interface NewsEvent {
 }
 
 const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
-  // Safety check: If cryptoId is undefined or null, use a default value
+  // Ensure we always have a valid ID
   const safeId = cryptoId || "bitcoin";
   
   // Generate news events based on cryptoId
@@ -127,7 +127,7 @@ const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
     }
   };
 
-  // Get the capitalized version of the crypto ID
+  // Capitalize the crypto ID safely
   const capitalizedCryptoId = safeId.charAt(0).toUpperCase() + safeId.slice(1);
 
   return (

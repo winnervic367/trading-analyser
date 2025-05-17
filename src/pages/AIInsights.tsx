@@ -88,8 +88,8 @@ const AIInsights = () => {
                 shortTermPrediction={predictions.shortTerm}
                 longTermPrediction={predictions.longTerm}
               />
-              <SentimentEngine cryptoId={selectedCrypto.id} />
-              <NewsIntelligence cryptoId={selectedCrypto.id} />
+              <SentimentEngine cryptoId={selectedCrypto.id || "bitcoin"} />
+              <NewsIntelligence cryptoId={selectedCrypto.id || "bitcoin"} />
             </div>
             
             <div className="col-span-1 space-y-4">

@@ -18,6 +18,9 @@ interface NewsEvent {
 }
 
 const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
+  // Safety check: If cryptoId is undefined or null, use a default value
+  const safeId = cryptoId || "bitcoin";
+  
   // Generate news events based on cryptoId
   const getNewsEvents = (): NewsEvent[] => {
     const categories = ['regulation', 'market', 'adoption', 'technology'];
@@ -26,7 +29,7 @@ const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
     
     // Use cryptoId to generate some "deterministic randomness"
     const hashCode = (s: string) => s.split('').reduce((a, b) => (((a << 5) - a) + b.charCodeAt(0))|0, 0);
-    const seed = hashCode(cryptoId);
+    const seed = hashCode(safeId);
     
     // Generate 5 events
     return Array(5).fill(0).map((_, i) => {
@@ -46,35 +49,35 @@ const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
       
       if (category === 'regulation') {
         if (sentiment === 'positive') {
-          title = `New regulatory framework provides clarity for ${cryptoId} trading`;
+          title = `New regulatory framework provides clarity for ${safeId} trading`;
         } else if (sentiment === 'negative') {
-          title = `Regulatory concerns grow as authorities scrutinize ${cryptoId}`;
+          title = `Regulatory concerns grow as authorities scrutinize ${safeId}`;
         } else {
-          title = `Regulatory discussions ongoing regarding ${cryptoId} and similar assets`;
+          title = `Regulatory discussions ongoing regarding ${safeId} and similar assets`;
         }
       } else if (category === 'market') {
         if (sentiment === 'positive') {
-          title = `${cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} rallies amid strong market fundamentals`;
+          title = `${safeId.charAt(0).toUpperCase() + safeId.slice(1)} rallies amid strong market fundamentals`;
         } else if (sentiment === 'negative') {
-          title = `${cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} faces selling pressure as market sentiment shifts`;
+          title = `${safeId.charAt(0).toUpperCase() + safeId.slice(1)} faces selling pressure as market sentiment shifts`;
         } else {
-          title = `${cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} stabilizes as traders assess market conditions`;
+          title = `${safeId.charAt(0).toUpperCase() + safeId.slice(1)} stabilizes as traders assess market conditions`;
         }
       } else if (category === 'adoption') {
         if (sentiment === 'positive') {
-          title = `Major company announces ${cryptoId} integration for payments`;
+          title = `Major company announces ${safeId} integration for payments`;
         } else if (sentiment === 'negative') {
-          title = `Company postpones plans to adopt ${cryptoId} citing concerns`;
+          title = `Company postpones plans to adopt ${safeId} citing concerns`;
         } else {
-          title = `Industry continues to evaluate ${cryptoId} adoption potential`;
+          title = `Industry continues to evaluate ${safeId} adoption potential`;
         }
       } else { // technology
         if (sentiment === 'positive') {
-          title = `Technological breakthrough could boost ${cryptoId} performance`;
+          title = `Technological breakthrough could boost ${safeId} performance`;
         } else if (sentiment === 'negative') {
-          title = `Security vulnerability discovered in ${cryptoId}-related protocol`;
+          title = `Security vulnerability discovered in ${safeId}-related protocol`;
         } else {
-          title = `Development team provides update on ${cryptoId} technical roadmap`;
+          title = `Development team provides update on ${safeId} technical roadmap`;
         }
       }
       
@@ -124,6 +127,9 @@ const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
     }
   };
 
+  // Get the capitalized version of the crypto ID
+  const capitalizedCryptoId = safeId.charAt(0).toUpperCase() + safeId.slice(1);
+
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -134,7 +140,7 @@ const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
       <CardContent>
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            AI-detected events that may impact {cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} price movements
+            AI-detected events that may impact {capitalizedCryptoId} price movements
           </p>
           
           <div className="space-y-3">

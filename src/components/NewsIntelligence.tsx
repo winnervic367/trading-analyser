@@ -18,7 +18,7 @@ interface NewsEvent {
 }
 
 const NewsIntelligence: React.FC<NewsIntelligenceProps> = ({ cryptoId }) => {
-  // Ensure we always have a valid ID
+  // Make sure we always have a valid ID to prevent the charAt error
   const safeId = cryptoId || "bitcoin";
   
   // Generate news events based on cryptoId

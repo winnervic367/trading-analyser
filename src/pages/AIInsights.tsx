@@ -7,6 +7,7 @@ import AIPrediction from "@/components/AIPrediction";
 import { CryptoCurrency } from "@/services/cryptoService";
 import SentimentEngine from "@/components/SentimentEngine";
 import NewsIntelligence from "@/components/NewsIntelligence";
+import UserProfileMenu from "@/components/UserProfileMenu";
 
 const AIInsights = () => {
   const [selectedCrypto, setSelectedCrypto] = React.useState<CryptoCurrency>({
@@ -100,6 +101,7 @@ const AIInsights = () => {
                 onSelectCrypto={setSelectedCrypto}
                 selectedCryptoId={cryptoId}
               />
+              <UserProfileMenu />
             </div>
           </div>
         </main>

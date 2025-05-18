@@ -9,7 +9,7 @@ import PrivateRoute from "@/components/PrivateRoute";
 
 import Index from "./pages/Index";
 import Analysis from "./pages/Analysis";
-import AIInsights from "./pages/AIInsights";
+import AISignals from "./pages/AISignals"; // Updated to AI Signals
 import Discover from "./pages/Discover";
 import News from "./pages/News";
 import History from "./pages/History";
@@ -43,7 +43,7 @@ const App = () => (
             {/* Protected routes */}
             <Route path="/" element={<PrivateRoute><Index /></PrivateRoute>} />
             <Route path="/analysis" element={<PrivateRoute><Analysis /></PrivateRoute>} />
-            <Route path="/ai-insights" element={<PrivateRoute><AIInsights /></PrivateRoute>} />
+            <Route path="/ai-signals" element={<PrivateRoute><AISignals /></PrivateRoute>} />
             <Route path="/discover" element={<PrivateRoute><Discover /></PrivateRoute>} />
             <Route path="/news" element={<PrivateRoute><News /></PrivateRoute>} />
             <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />

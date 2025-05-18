@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BarChart3, Compass, Settings, Sparkles, TrendingUp, BookOpen, History, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -8,16 +8,16 @@ type SidebarItem = {
   icon: LucideIcon;
   label: string;
   href: string;
-  active?: boolean;
 };
 
 const Sidebar = () => {
+  const location = useLocation();
+  
   const menuItems: SidebarItem[] = [
     {
       icon: TrendingUp,
       label: "Market",
       href: "/",
-      active: true,
     },
     {
       icon: BarChart3,
@@ -26,8 +26,8 @@ const Sidebar = () => {
     },
     {
       icon: Sparkles,
-      label: "AI Insights",
-      href: "/ai-insights",
+      label: "AI Signals",
+      href: "/ai-signals",
     },
     {
       icon: Compass,
@@ -71,7 +71,7 @@ const Sidebar = () => {
               className={cn(
                 "flex items-center py-3 px-3 rounded-md text-sm transition-colors",
                 "hover:bg-sidebar-accent",
-                item.active
+                location.pathname === item.href
                   ? "bg-sidebar-accent text-primary font-medium"
                   : "text-sidebar-foreground"
               )}

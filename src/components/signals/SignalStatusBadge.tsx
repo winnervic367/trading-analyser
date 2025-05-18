@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
+import { SignalStatus } from "@/types/market";
 
 interface SignalStatusBadgeProps {
-  status: "active" | "completed";
+  status: SignalStatus;
   result?: "profit" | "loss" | null;
 }
 
@@ -15,6 +16,12 @@ const SignalStatusBadge: React.FC<SignalStatusBadgeProps> = ({
     return (
       <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
         Active
+      </Badge>
+    );
+  } else if (status === "invalidated") {
+    return (
+      <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+        Invalidated
       </Badge>
     );
   } else if (result === "profit") {

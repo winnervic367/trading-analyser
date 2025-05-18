@@ -21,7 +21,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>();
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: "demo@example.com",
+      password: "password123"
+    }
+  });
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
@@ -40,6 +45,20 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  // Auto-login for demo purposes (remove in production)
+  React.useEffect(() => {
+    const autoLogin = async () => {
+      try {
+        await login("demo@example.com", "password123");
+        navigate("/");
+      } catch (error) {
+        // Silent fail - user will need to log in manually
+      }
+    };
+    
+    autoLogin();
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">

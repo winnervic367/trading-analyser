@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { MarketType, PredictionSignal, TimeFrame } from "@/types/market";
 import { fetchFilteredSignals } from "@/services/signalService";
@@ -7,7 +6,7 @@ import { format } from "date-fns";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Share2, Telegram, ArrowUp, ArrowDown } from "lucide-react";
+import { Share2, MessageCircle, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import PriceChart from "@/components/PriceChart";
@@ -259,7 +258,7 @@ View Chart 📊 [${window.location.origin}/signals/${signal.id}]`;
                             handleShare(signal, "telegram");
                           }}
                         >
-                          <Telegram className="h-4 w-4" />
+                          <MessageCircle className="h-4 w-4" />
                         </Button>
                         <Button 
                           variant="ghost" 

@@ -15,7 +15,7 @@ interface RegisterFormData {
 }
 
 const Register = () => {
-  const { login } = useAuth();
+  const { register: registerAuthUser } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   
@@ -31,8 +31,8 @@ const Register = () => {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      const user = registerUser(data.email, data.password, data.name);
-      login(user);
+      // Pass registration details to AuthContext's register method
+      await registerAuthUser(data.email, data.password, data.name);
       
       toast({
         title: "Registration Successful",

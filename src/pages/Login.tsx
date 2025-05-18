@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "@/services/authService";
@@ -26,13 +25,8 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      const user = loginUser(data.email, data.password);
-      login(user);
-      
-      toast({
-        title: "Login Successful",
-        description: `Welcome back, ${user.name}!`,
-      });
+      // Pass login credentials to AuthContext's login method which expects email and password
+      await login(data.email, data.password);
       
       navigate("/");
     } catch (error) {

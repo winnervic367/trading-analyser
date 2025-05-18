@@ -4,11 +4,11 @@ import { Market, MarketType, PredictionSignal, SignalDirection, SignalStatus, Ti
 
 // Mock data for various market types
 const cryptoMarkets: Market[] = [
-  { id: "bitcoin", name: "Bitcoin", symbol: "BTC", type: "crypto", currentPrice: 62453.12, image: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png" },
-  { id: "ethereum", name: "Ethereum", symbol: "ETH", type: "crypto", currentPrice: 3124.87, image: "https://assets.coingecko.com/coins/images/279/large/ethereum.png" },
-  { id: "solana", name: "Solana", symbol: "SOL", type: "crypto", currentPrice: 143.26, image: "https://assets.coingecko.com/coins/images/4128/large/solana.png" },
-  { id: "cardano", name: "Cardano", symbol: "ADA", type: "crypto", currentPrice: 0.457, image: "https://assets.coingecko.com/coins/images/975/large/cardano.png" },
-  { id: "binancecoin", name: "BNB", symbol: "BNB", type: "crypto", currentPrice: 567.32, image: "https://assets.coingecko.com/coins/images/825/large/binance-coin-logo.png" },
+  { id: "bitcoin", name: "Bitcoin", symbol: "BTC/USDT", type: "crypto", currentPrice: 62453.12, image: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png" },
+  { id: "ethereum", name: "Ethereum", symbol: "ETH/USDT", type: "crypto", currentPrice: 3124.87, image: "https://assets.coingecko.com/coins/images/279/large/ethereum.png" },
+  { id: "solana", name: "Solana", symbol: "SOL/USDT", type: "crypto", currentPrice: 143.26, image: "https://assets.coingecko.com/coins/images/4128/large/solana.png" },
+  { id: "cardano", name: "Cardano", symbol: "ADA/USDT", type: "crypto", currentPrice: 0.457, image: "https://assets.coingecko.com/coins/images/975/large/cardano.png" },
+  { id: "binancecoin", name: "BNB", symbol: "BNB/USDT", type: "crypto", currentPrice: 567.32, image: "https://assets.coingecko.com/coins/images/825/large/binance-coin-logo.png" },
 ];
 
 const forexMarkets: Market[] = [
@@ -22,9 +22,9 @@ const forexMarkets: Market[] = [
 const commodityMarkets: Market[] = [
   { id: "gold", name: "Gold", symbol: "XAU/USD", type: "commodities", currentPrice: 2337.45 },
   { id: "silver", name: "Silver", symbol: "XAG/USD", type: "commodities", currentPrice: 27.32 },
-  { id: "oil", name: "Crude Oil", symbol: "CL", type: "commodities", currentPrice: 78.45 },
-  { id: "natgas", name: "Natural Gas", symbol: "NG", type: "commodities", currentPrice: 1.94 },
-  { id: "copper", name: "Copper", symbol: "HG", type: "commodities", currentPrice: 4.22 },
+  { id: "oil", name: "Crude Oil", symbol: "CL/USD", type: "commodities", currentPrice: 78.45 },
+  { id: "natgas", name: "Natural Gas", symbol: "NG/USD", type: "commodities", currentPrice: 1.94 },
+  { id: "copper", name: "Copper", symbol: "HG/USD", type: "commodities", currentPrice: 4.22 },
 ];
 
 // Combine all markets
@@ -180,7 +180,7 @@ export const fetchMarketsByType = async (type: MarketType): Promise<Market[]> =>
   });
 };
 
-// Update market prices with random changes to simulate real-time updates
+// Update market prices with real-time changes to simulate real-time updates
 export const updateMarketPrices = (): void => {
   Object.values(allMarkets).forEach(markets => {
     markets.forEach(market => {

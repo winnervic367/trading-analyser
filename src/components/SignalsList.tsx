@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MarketType, PredictionSignal, TimeFrame } from "@/types/market";
 import { fetchFilteredSignals, startRealtimeUpdates, stopRealtimeUpdates } from "@/services/signalService";
-import { TrendingUp, TrendingDown, ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 import { CryptoCurrency } from "@/services/cryptoService";
 
 interface SignalsListProps {
@@ -26,46 +26,53 @@ const SignalsList: React.FC<SignalsListProps> = ({
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
-  useEffect(() => {
-    const loadSignals = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchFilteredSignals(marketType, timeFrame);
-        setSignals(data);
-        
-        // Select the first signal by default if none is selected
-        if (data.length > 0 && !selectedSignalId) {
-          onSelectSignal(data[0].id);
-          if (marketType === "crypto" && data[0].marketId) {
-            onSelectAsset({
-              id: data[0].marketId,
-              symbol: data[0].assetSymbol.toLowerCase(),
-              name: data[0].assetName,
-              image: data[0].image || "",
-              current_price: data[0].entryPrice,
-              market_cap: 0,
-              market_cap_rank: 0,
-              price_change_percentage_24h: 0,
-            });
-          }
+  const loadSignals = async () => {
+    try {
+      const data = await fetchFilteredSignals(marketType, timeFrame);
+      setSignals(data);
+      
+      // Select the first signal by default if none is selected
+      if (data.length > 0 && !selectedSignalId) {
+        onSelectSignal(data[0].id);
+        if (marketType === "crypto" && data[0].marketId) {
+          onSelectAsset({
+            id: data[0].marketId,
+            symbol: data[0].assetSymbol.toLowerCase(),
+            name: data[0].assetName,
+            image: data[0].image || "",
+            current_price: data[0].entryPrice,
+            market_cap: 0,
+            market_cap_rank: 0,
+            price_change_percentage_24h: 0,
+          });
         }
-      } catch (error) {
-        console.error("Error loading signals:", error);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error loading signals:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadSignals();
     
     // Start real-time price updates
     startRealtimeUpdates();
     
+    // Listen for market data update events
+    const handleMarketUpdate = () => {
+      loadSignals();
+    };
+    
+    window.addEventListener('marketDataUpdated', handleMarketUpdate);
+    
     return () => {
       // Clean up interval on unmount
       stopRealtimeUpdates();
+      window.removeEventListener('marketDataUpdated', handleMarketUpdate);
     };
-  }, [marketType, timeFrame, onSelectSignal, selectedSignalId, onSelectAsset]);
+  }, [marketType, timeFrame]);
 
   const filteredSignals = signals.filter(signal => {
     if (filter === "all") return true;

@@ -184,8 +184,8 @@ export const fetchMarketsByType = async (type: MarketType): Promise<Market[]> =>
 export const updateMarketPrices = (): void => {
   Object.values(allMarkets).forEach(markets => {
     markets.forEach(market => {
-      // Update price with small random change (±0.5%)
-      const changePercent = (Math.random() * 1) - 0.5;
+      // Update price with more significant random change (±1.5%) for more noticeable movement
+      const changePercent = (Math.random() * 3) - 1.5;
       market.currentPrice *= (1 + changePercent / 100);
       // Round to appropriate decimal places
       if (market.currentPrice > 1000) {
@@ -206,6 +206,7 @@ export const updateMarketPrices = (): void => {
       if (signal.status === "active") {
         const market = allMarkets[signal.marketType].find(m => m.id === signal.marketId);
         if (market) {
+          // Update signal with current market price for real-time display
           // Check if target or stop loss is hit
           if (signal.direction === "buy") {
             if (market.currentPrice >= signal.targetPrice) {
@@ -243,9 +244,12 @@ let updateInterval: number | null = null;
 
 export const startRealtimeUpdates = (): void => {
   if (updateInterval === null) {
+    // Update every 2 seconds for more responsive real-time feel
     updateInterval = window.setInterval(() => {
       updateMarketPrices();
-    }, 5000); // Update every 5 seconds
+      // Emit custom event so components can update without polling
+      window.dispatchEvent(new CustomEvent('marketDataUpdated'));
+    }, 2000);
   }
 };
 

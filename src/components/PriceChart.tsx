@@ -45,6 +45,29 @@ const PriceChart: React.FC<PriceChartProps> = ({
     };
 
     loadChartData();
+    
+    // Listen for market data updates
+    const handleMarketUpdate = async () => {
+      try {
+        const data = await fetchHistoricalData(cryptoId, days, interval);
+        const formattedData = formatChartData(data);
+        setChartData(formattedData);
+      } catch (err) {
+        console.error("Error updating chart data:", err);
+      }
+    };
+
+    window.addEventListener('marketDataUpdated', handleMarketUpdate);
+    
+    // Set up regular refresh interval
+    const refreshInterval = setInterval(() => {
+      loadChartData();
+    }, 30000); // Refresh every 30 seconds
+    
+    return () => {
+      window.removeEventListener('marketDataUpdated', handleMarketUpdate);
+      clearInterval(refreshInterval);
+    };
   }, [cryptoId, days, interval]);
 
   const formatChartData = (data: HistoricalData): ChartData[] => {
@@ -132,6 +155,7 @@ const PriceChart: React.FC<PriceChartProps> = ({
             strokeWidth={2}
             dot={false}
             activeDot={{ r: 5 }}
+            isAnimationActive={true} /* Enable animation for better visual feedback */
           />
         </LineChart>
       </ResponsiveContainer>

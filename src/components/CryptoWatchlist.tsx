@@ -32,6 +32,28 @@ const CryptoWatchlist: React.FC<CryptoWatchlistProps> = ({
     };
 
     loadCryptos();
+    
+    // Set up interval for real-time updates
+    const updateInterval = setInterval(async () => {
+      try {
+        const data = await fetchTopCryptos(20);
+        setCryptos(data);
+      } catch (error) {
+        console.error("Error updating cryptocurrency data:", error);
+      }
+    }, 15000); // Update every 15 seconds
+    
+    // Listen for market data update events
+    const handleMarketUpdate = () => {
+      loadCryptos();
+    };
+    
+    window.addEventListener('marketDataUpdated', handleMarketUpdate);
+    
+    return () => {
+      clearInterval(updateInterval);
+      window.removeEventListener('marketDataUpdated', handleMarketUpdate);
+    };
   }, []);
 
   const filteredCryptos = cryptos.filter((crypto) =>
